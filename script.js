@@ -94,6 +94,7 @@ submitSelectionBtn.addEventListener('click', () => {
               console.log(data);
           }).catch(error => {
               console.error('Error:', error);
+              alert('제출 실패. 다시 시도해 주세요.');
           });
     } else {
         alert('4개의 이미지를 선택하세요.');
@@ -119,6 +120,7 @@ drawBtn.addEventListener('click', () => {
           drawBtn.style.display = 'none';
       }).catch(error => {
           console.error('Error:', error);
+          alert('추첨 실패. 다시 시도해 주세요.');
       });
 });
 
