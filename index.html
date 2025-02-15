@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>포켓몬 로또</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .image-container img {
+            border: 2px solid transparent;
+            cursor: pointer;
+            margin: 5px;
+            width: 100px;
+            height: 100px;
+        }
+        .image-container img.selected {
+            border: 2px solid red;
+        }
+        #winner-notice {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            padding-top: 20%;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -29,36 +58,40 @@
         <!-- 로또 참가 -->
         <div id="lotto-form" style="display:none;">
             <h2>포켓몬 로또</h2>
-            <div id="pokemon-images">
-                <!-- 포켓몬 이미지를 grid로 표시 -->
-    <img src="images/1-1.jpg" alt="포켓몬 1" class="pokemon-image">
-    <img src="images/2-2.jpg" alt="포켓몬 2" class="pokemon-image">
-    <img src="images/3.jpg" alt="포켓몬 3" class="pokemon-image">
-    <img src="images/4-1.jpg" alt="포켓몬 4" class="pokemon-image">
-    <img src="images/5.jpg" alt="포켓몬 5" class="pokemon-image">
-    <img src="images/6.jpg" alt="포켓몬 6" class="pokemon-image">
-    <img src="images/7.jpg" alt="포켓몬 7" class="pokemon-image">
-    <img src="images/8.jpg" alt="포켓몬 8" class="pokemon-image">
-    <img src="images/9.jpg" alt="포켓몬 9" class="pokemon-image">
-    <img src="images/10.jpg" alt="포켓몬 10" class="pokemon-image">
-    <img src="images/11.jpg" alt="포켓몬 11" class="pokemon-image">
-    <img src="images/12.jpg" alt="포켓몬 12" class="pokemon-image">
-    <img src="images/13.jpg" alt="포켓몬 13" class="pokemon-image">
-    <img src="images/14.jpg" alt="포켓몬 14" class="pokemon-image">
-    <img src="images/15.jpg" alt="포켓몬 15" class="pokemon-image">
-    <img src="images/16.jpg" alt="포켓몬 16" class="pokemon-image">
-    <img src="images/17.jpg" alt="포켓몬 17" class="pokemon-image">
-    <img src="images/18.jpg" alt="포켓몬 18" class="pokemon-image">
-    <img src="images/19.jpg" alt="포켓몬 19" class="pokemon-image">
-    <img src="images/20.jpg" alt="포켓몬 20" class="pokemon-image">
-    <img src="images/21.jpg" alt="포켓몬 21" class="pokemon-image">
-    <img src="images/22.jpg" alt="포켓몬 22" class="pokemon-image">
-    <img src="images/23.jpg" alt="포켓몬 23" class="pokemon-image">
-    <img src="images/24.jpg" alt="포켓몬 24" class="pokemon-image">
-    <img src="images/25.jpg" alt="포켓몬 25" class="pokemon-image">
-    <img src="images/26.jpg" alt="포켓몬 26" class="pokemon-image">
-    <img src="images/27.jpg" alt="포켓몬 27" class="pokemon-image">
-                <!-- ... 나머지 이미지들 ... -->
+            <div>
+                <label for="minecraft-id">Enter Minecraft ID:</label>
+                <input type="text" id="minecraft-id" required>
+                <span id="id-error" style="color:red; display:none;">Minecraft ID is required!</span>
+            </div>
+            <div class="image-container" id="image-container">
+                <img src="/lottery-sitepoke/images/1-1.png" alt="포켓몬 1" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/2-2.png" alt="포켓몬 2" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/3.png" alt="포켓몬 3" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/4-1.png" alt="포켓몬 4" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/5.png" alt="포켓몬 5" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/6-2.png" alt="포켓몬 6" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/7.png" alt="포켓몬 7" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/8.png" alt="포켓몬 8" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/9.png" alt="포켓몬 9" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/10.png" alt="포켓몬 10" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/11.png" alt="포켓몬 11" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/12.png" alt="포켓몬 12" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/13.png" alt="포켓몬 13" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/14.png" alt="포켓몬 14" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/15.png" alt="포켓몬 15" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/16.png" alt="포켓몬 16" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/17.png" alt="포켓몬 17" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/18.png" alt="포켓몬 18" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/19.png" alt="포켓몬 19" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/20.png" alt="포켓몬 20" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/21.png" alt="포켓몬 21" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/22.png" alt="포켓몬 22" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/23.png" alt="포켓몬 23" class="pokemon-image" data-id="img3">
+                <img src="/lottery-sitepoke/images/24.png" alt="포켓몬 24" class="pokemon-image" data-id="img4">
+                <img src="/lottery-sitepoke/images/25.png" alt="포켓몬 25" class="pokemon-image" data-id="img1">
+                <img src="/lottery-sitepoke/images/26.png" alt="포켓몬 26" class="pokemon-image" data-id="img2">
+                <img src="/lottery-sitepoke/images/27.png" alt="포켓몬 27" class="pokemon-image" data-id="img3">
+                <!-- Add the rest of the images here -->
             </div>
             <button id="draw-btn">추첨하기</button>
             <div id="draw-result" style="display:none;">
@@ -74,8 +107,133 @@
 
         <!-- 참여 인원 카운트 -->
         <p>참여 인원: <span id="participants-count">0</span></p>
+        <div id="participant-list-container">
+            <h3>참가자 명단</h3>
+            <ul id="participant-list">
+                <!-- 참가자 목록 -->
+            </ul>
+        </div>
 
-        <script src="script.js"></script>
+        <!-- Winner Notice -->
+        <div id="winner-notice"></div>
+
+        <script>
+            const images = document.querySelectorAll('.pokemon-image');
+            const selectedImages = new Set();
+            let drawnImages = [];
+            let isAdmin = false;
+
+            images.forEach(img => {
+                img.addEventListener('click', () => {
+                    if (selectedImages.has(img.dataset.id)) {
+                        selectedImages.delete(img.dataset.id);
+                        img.classList.remove('selected');
+                    } else if (selectedImages.size < 4) {
+                        selectedImages.add(img.dataset.id);
+                        img.classList.add('selected');
+                    } else {
+                        alert('You can only select 4 images.');
+                    }
+                });
+            });
+
+            function validateInput() {
+                const minecraftId = document.getElementById('minecraft-id').value;
+                if (!minecraftId) {
+                    document.getElementById('id-error').style.display = 'inline';
+                    return false;
+                } else {
+                    document.getElementById('id-error').style.display = 'none';
+                    return true;
+                }
+            }
+
+            function handleSubmit() {
+                if (!validateInput()) return;
+
+                drawImages();
+
+                const resultContainer = document.getElementById('draw-result');
+                resultContainer.style.display = 'block';
+                const winnersList = document.getElementById('winners-list');
+                winnersList.innerHTML = '';
+
+                // Display drawn images
+                drawnImages.forEach(src => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<img src="${src}" alt="포켓몬" width="100">`;
+                    winnersList.appendChild(li);
+                });
+
+                // Display Minecraft ID
+                const minecraftId = document.getElementById('minecraft-id').value;
+                const idElement = document.createElement('p');
+                idElement.textContent = `Winner: ${minecraftId}`;
+                winnersList.appendChild(idElement);
+
+                // Show winner notice to all users
+                showWinnerNotice(minecraftId);
+
+                // Record the winner with the date
+                recordWinner(minecraftId);
+
+                // Add participant to list
+                addParticipant(minecraftId);
+            }
+
+            function drawImages() {
+                const imageArray = Array.from(images);
+                drawnImages = [];
+                while (drawnImages.length < 4) {
+                    const randomIndex = Math.floor(Math.random() * imageArray.length);
+                    const src = imageArray[randomIndex].src;
+                    if (!drawnImages.includes(src)) {
+                        drawnImages.push(src);
+                    }
+                }
+            }
+
+            function showWinnerNotice(winner) {
+                const notice = document.getElementById('winner-notice');
+                notice.innerHTML = `The winner is: ${winner}`;
+                notice.style.display = 'block';
+
+                setTimeout(() => {
+                    notice.style.display = 'none';
+                }, 30000); // 30 seconds
+            }
+
+            function recordWinner(winner) {
+                const date = new Date().toISOString().split('T')[0];
+                const record = { date, winner };
+                let winners = localStorage.getItem('winners');
+                winners = winners ? JSON.parse(winners) : [];
+                winners.push(record);
+                localStorage.setItem('winners', JSON.stringify(winners));
+            }
+
+            function addParticipant(participant) {
+                const participantList = document.getElementById('participant-list');
+                const li = document.createElement('li');
+                li.textContent = participant;
+                participantList.appendChild(li);
+            }
+
+            document.getElementById('draw-btn').addEventListener('click', handleSubmit);
+
+            document.getElementById('login-btn').addEventListener('click', () => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username === 'admin' && password === '4483') {
+                    isAdmin = true;
+                    document.getElementById('login-form').style.display = 'none';
+                    document.getElementById('lotto-form').style.display = 'block';
+                } else {
+                    alert('Invalid credentials!');
+                }
+            });
+        </script>
     </div>
 </body>
 </html>
