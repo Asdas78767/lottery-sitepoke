@@ -14,11 +14,10 @@ const participantsCountElem = document.getElementById('participants-count');
 const countdownElem = document.getElementById('timer');
 const signupLink = document.getElementById('signup-link');
 const loginLink = document.getElementById('login-link');
-
 const drawResult = document.getElementById('draw-result');
+const completionMessage = document.getElementById('completion-message');
 const countdownDate = new Date().setHours(22, 0, 0, 0); // 매일 10시까지
 
-// 로그인 함수
 loginBtn.addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -34,7 +33,6 @@ loginBtn.addEventListener('click', () => {
     updateUI();
 });
 
-// 회원가입 함수
 signupBtn.addEventListener('click', () => {
     const username = document.getElementById('new-username').value;
     const password = document.getElementById('new-password').value;
@@ -42,7 +40,6 @@ signupBtn.addEventListener('click', () => {
     updateUI();
 });
 
-// 로그인/회원가입 UI 변경
 signupLink.addEventListener('click', () => {
     loginForm.style.display = 'none';
     signupForm.style.display = 'block';
@@ -53,10 +50,15 @@ loginLink.addEventListener('click', () => {
     loginForm.style.display = 'block';
 });
 
-// 추첨 기능
 drawBtn.addEventListener('click', () => {
     if (!loggedIn) {
         alert('로그인이 필요합니다.');
+        return;
+    }
+
+    const minecraftId = document.getElementById('minecraft-id').value;
+    if (hasSubmittedToday(minecraftId)) {
+        alert('You have already submitted today. Please try again tomorrow.');
         return;
     }
 
@@ -68,9 +70,11 @@ drawBtn.addEventListener('click', () => {
     }
 
     displayWinners();
+    completionMessage.style.display = 'block';
+    drawBtn.style.display = 'none';
+    saveSubmissionDate(minecraftId);
 });
 
-// 당첨자 표시
 function displayWinners() {
     winnersList.innerHTML = '';
     winners.forEach(winner => {
@@ -81,7 +85,6 @@ function displayWinners() {
     drawResult.style.display = 'block';
 }
 
-// 카운트다운 기능
 function updateCountdown() {
     const now = new Date().getTime();
     const distance = countdownDate - now;
@@ -98,7 +101,6 @@ function updateCountdown() {
     countdownElem.textContent = `${hours}시간 ${minutes}분 ${seconds}초`;
 }
 
-// UI 업데이트
 function updateUI() {
     if (loggedIn) {
         lottoForm.style.display = 'block';
@@ -111,5 +113,17 @@ function updateUI() {
     }
 }
 
-// 매초마다 카운트다운 업데이트
+function hasSubmittedToday(minecraftId) {
+    const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
+    const today = new Date().toISOString().split('T')[0];
+    return submissions[minecraftId] === today;
+}
+
+function saveSubmissionDate(minecraftId) {
+    const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
+    const today = new Date().toISOString().split('T')[0];
+    submissions[minecraftId] = today;
+    localStorage.setItem('submissions', JSON.stringify(submissions));
+}
+
 setInterval(updateCountdown, 1000);
