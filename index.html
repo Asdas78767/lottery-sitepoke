@@ -36,6 +36,12 @@
         #draw-btn {
             display: none;
         }
+        #completion-message {
+            display: none;
+            color: green;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -102,7 +108,7 @@
                 <ul id="winners-list">
                     <!-- 당첨자 목록 -->
                 </ul>
-                <p id="completion-message" style="display:none;">이미지를 제출했습니다. 내일 다시 시도하십시오.</p>
+                <p id="completion-message">이미지를 제출했습니다. 내일 다시 시도하십시오.</p>
             </div>
             <div id="countdown">
                 <p>다음 추첨까지 남은 시간: <span id="timer"></span></p>
@@ -121,154 +127,7 @@
         <!-- Winner Notice -->
         <div id="winner-notice"></div>
 
-        <script>
-            const images = document.querySelectorAll('.pokemon-image');
-            const selectedImages = new Set();
-            let drawnImages = [];
-            let isAdmin = false;
-
-            images.forEach(img => {
-                img.addEventListener('click', () => {
-                    if (selectedImages.has(img.dataset.id)) {
-                        selectedImages.delete(img.dataset.id);
-                        img.classList.remove('selected');
-                    } else if (selectedImages.size < 4) {
-                        selectedImages.add(img.dataset.id);
-                        img.classList.add('selected');
-                    } else {
-                        alert('You can only select 4 images.');
-                    }
-                });
-            });
-
-            function validateInput() {
-                const minecraftId = document.getElementById('minecraft-id').value;
-                if (!minecraftId) {
-                    document.getElementById('id-error').style.display = 'inline';
-                    return false;
-                } else {
-                    document.getElementById('id-error').style.display = 'none';
-                    return true;
-                }
-            }
-
-            function handleSubmit() {
-                if (!validateInput()) return;
-
-                const minecraftId = document.getElementById('minecraft-id').value;
-                if (hasSubmittedToday(minecraftId)) {
-                    alert('You have already submitted today. Please try again tomorrow.');
-                    return;
-                }
-
-                drawImages();
-
-                const resultContainer = document.getElementById('draw-result');
-                resultContainer.style.display = 'block';
-                const winnersList = document.getElementById('winners-list');
-                winnersList.innerHTML = '';
-
-                // Display drawn images
-                const drawnImagesContainer = document.createElement('div');
-                drawnImagesContainer.style.display = 'flex';
-                drawnImages.forEach(src => {
-                    const img = document.createElement('img');
-                    img.src = src;
-                    img.alt = '포켓몬';
-                    img.width = 100;
-                    drawnImagesContainer.appendChild(img);
-                });
-                winnersList.appendChild(drawnImagesContainer);
-
-                // Display Minecraft ID
-                const idElement = document.createElement('p');
-                idElement.textContent = `Winner: ${minecraftId}`;
-                winnersList.appendChild(idElement);
-
-                // Show winner notice to all users
-                showWinnerNotice(minecraftId);
-
-                // Record the winner with the date
-                recordWinner(minecraftId);
-
-                // Add participant to list
-                addParticipant(minecraftId);
-
-                // Display completion message and hide the draw button
-                document.getElementById('completion-message').style.display = 'block';
-                document.getElementById('draw-btn').style.display = 'none';
-
-                // Save submission date
-                saveSubmissionDate(minecraftId);
-            }
-
-            function drawImages() {
-                const imageArray = Array.from(images);
-                drawnImages = [];
-                while (drawnImages.length < 4) {
-                    const randomIndex = Math.floor(Math.random() * imageArray.length);
-                    const src = imageArray[randomIndex].src;
-                    if (!drawnImages.includes(src)) {
-                        drawnImages.push(src);
-                    }
-                }
-            }
-
-            function showWinnerNotice(winner) {
-                const notice = document.getElementById('winner-notice');
-                notice.innerHTML = `The winner is: ${winner}`;
-                notice.style.display = 'block';
-
-                setTimeout(() => {
-                    notice.style.display = 'none';
-                }, 30000); // 30 seconds
-            }
-
-            function recordWinner(winner) {
-                const date = new Date().toISOString().split('T')[0];
-                const record = { date, winner };
-                let winners = localStorage.getItem('winners');
-                winners = winners ? JSON.parse(winners) : [];
-                winners.push(record);
-                localStorage.setItem('winners', JSON.stringify(winners));
-            }
-
-            function addParticipant(participant) {
-                const participantList = document.getElementById('participant-list');
-                const li = document.createElement('li');
-                li.textContent = participant;
-                participantList.appendChild(li);
-            }
-
-            function hasSubmittedToday(minecraftId) {
-                const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
-                const today = new Date().toISOString().split('T')[0];
-                return submissions[minecraftId] === today;
-            }
-
-            function saveSubmissionDate(minecraftId) {
-                const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
-                const today = new Date().toISOString().split('T')[0];
-                submissions[minecraftId] = today;
-                localStorage.setItem('submissions', JSON.stringify(submissions));
-            }
-
-            document.getElementById('draw-btn').addEventListener('click', handleSubmit);
-
-            document.getElementById('login-btn').addEventListener('click', () => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                if (username === 'admin' && password === '4483') {
-                    isAdmin = true;
-                    document.getElementById('login-form').style.display = 'none';
-                    document.getElementById('lotto-form').style.display = 'block';
-                    document.getElementById('draw-btn').style.display = 'block'; // Show the draw button for admin
-                } else {
-                    alert('Invalid credentials!');
-                }
-            });
-        </script>
+        <script src="script.js"></script>
     </div>
 </body>
 </html>
