@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포켓몬 로또</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 로그인 및 회원가입 -->
+        <div id="login-form">
+            <h2>로그인</h2>
+            <input type="text" id="username" placeholder="아이디" required>
+            <input type="password" id="password" placeholder="비밀번호" required>
+            <button id="login-btn">로그인</button>
+            <p><a href="#" id="signup-link">회원가입</a></p>
+        </div>
+
+        <!-- 회원가입 폼 -->
+        <div id="signup-form" style="display:none;">
+            <h2>회원가입</h2>
+            <input type="text" id="new-username" placeholder="마크 아이디" required>
+            <input type="password" id="new-password" placeholder="비밀번호" required>
+            <button id="signup-btn">회원가입</button>
+            <p><a href="#" id="login-link">로그인</a></p>
+        </div>
+
+        <!-- 로또 참가 -->
+        <div id="lotto-form" style="display:none;">
+            <h2>포켓몬 로또</h2>
+            <div id="pokemon-images">
+                <!-- 포켓몬 이미지를 grid로 표시 -->
+    <img src="images/1-1.jpg" alt="포켓몬 1" class="pokemon-image">
+    <img src="images/2-2.jpg" alt="포켓몬 2" class="pokemon-image">
+    <img src="images/3.jpg" alt="포켓몬 3" class="pokemon-image">
+    <img src="images/4-1.jpg" alt="포켓몬 4" class="pokemon-image">
+    <img src="images/5.jpg" alt="포켓몬 5" class="pokemon-image">
+    <img src="images/6.jpg" alt="포켓몬 6" class="pokemon-image">
+    <img src="images/7.jpg" alt="포켓몬 7" class="pokemon-image">
+    <img src="images/8.jpg" alt="포켓몬 8" class="pokemon-image">
+    <img src="images/9.jpg" alt="포켓몬 9" class="pokemon-image">
+    <img src="images/10.jpg" alt="포켓몬 10" class="pokemon-image">
+    <img src="images/11.jpg" alt="포켓몬 11" class="pokemon-image">
+    <img src="images/12.jpg" alt="포켓몬 12" class="pokemon-image">
+    <img src="images/13.jpg" alt="포켓몬 13" class="pokemon-image">
+    <img src="images/14.jpg" alt="포켓몬 14" class="pokemon-image">
+    <img src="images/15.jpg" alt="포켓몬 15" class="pokemon-image">
+    <img src="images/16.jpg" alt="포켓몬 16" class="pokemon-image">
+    <img src="images/17.jpg" alt="포켓몬 17" class="pokemon-image">
+    <img src="images/18.jpg" alt="포켓몬 18" class="pokemon-image">
+    <img src="images/19.jpg" alt="포켓몬 19" class="pokemon-image">
+    <img src="images/20.jpg" alt="포켓몬 20" class="pokemon-image">
+    <img src="images/21.jpg" alt="포켓몬 21" class="pokemon-image">
+    <img src="images/22.jpg" alt="포켓몬 22" class="pokemon-image">
+    <img src="images/23.jpg" alt="포켓몬 23" class="pokemon-image">
+    <img src="images/24.jpg" alt="포켓몬 24" class="pokemon-image">
+    <img src="images/25.jpg" alt="포켓몬 25" class="pokemon-image">
+    <img src="images/26.jpg" alt="포켓몬 26" class="pokemon-image">
+    <img src="images/27.jpg" alt="포켓몬 27" class="pokemon-image">
+                <!-- ... 나머지 이미지들 ... -->
+            </div>
+            <button id="draw-btn">추첨하기</button>
+            <div id="draw-result" style="display:none;">
+                <h3>당첨자</h3>
+                <ul id="winners-list">
+                    <!-- 당첨자 목록 -->
+                </ul>
+            </div>
+            <div id="countdown">
+                <p>다음 추첨까지 남은 시간: <span id="timer"></span></p>
+            </div>
+        </div>
+
+        <!-- 참여 인원 카운트 -->
+        <p>참여 인원: <span id="participants-count">0</span></p>
+
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
