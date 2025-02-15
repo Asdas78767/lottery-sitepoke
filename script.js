@@ -1,3 +1,8 @@
+// Define the server endpoint URLs
+const submitSelectionUrl = '/api/submit-selection';
+const triggerDrawUrl = '/api/trigger-draw';
+const getDrawResultsUrl = '/api/get-draw-results';
+
 let participantsCount = 0;
 let loggedIn = false;
 let isAdmin = false;
@@ -77,8 +82,19 @@ images.forEach(image => {
 
 submitSelectionBtn.addEventListener('click', () => {
     if (selectedImages.length === 4) {
-        alert('선택이 제출되었습니다.');
-        // 여기에 선택된 이미지를 서버로 전송하는 로직을 추가하세요.
+        fetch(submitSelectionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ images: selectedImages })
+        }).then(response => response.json())
+          .then(data => {
+              alert('선택이 제출되었습니다.');
+              console.log(data);
+          }).catch(error => {
+              console.error('Error:', error);
+          });
     } else {
         alert('4개의 이미지를 선택하세요.');
     }
@@ -90,22 +106,20 @@ drawBtn.addEventListener('click', () => {
         return;
     }
 
-    const minecraftId = document.getElementById('minecraft-id').value;
-    if (hasSubmittedToday(minecraftId)) {
-        alert('You have already submitted today. Please try again tomorrow.');
-        return;
-    }
-
-    winners = [];
-    for (let i = 0; i < 4; i++) {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        winners.push(images[randomIndex].alt);
-    }
-
-    displayWinners();
-    completionMessage.style.display = 'block';
-    drawBtn.style.display = 'none';
-    saveSubmissionDate(minecraftId);
+    fetch(triggerDrawUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json())
+      .then(data => {
+          winners = data.winners;
+          displayWinners();
+          completionMessage.style.display = 'block';
+          drawBtn.style.display = 'none';
+      }).catch(error => {
+          console.error('Error:', error);
+      });
 });
 
 function displayWinners() {
