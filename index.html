@@ -34,7 +34,10 @@
             padding-top: 20%;
         }
         #draw-btn {
-            display: none;
+            display: none; /* Initially hidden */
+        }
+        #draw-result {
+            display: none; /* Initially hidden */
         }
         #completion-message {
             display: none;
@@ -103,7 +106,8 @@
                 <!-- Add the rest of the images here -->
             </div>
             <button id="draw-btn">추첨하기</button>
-            <div id="draw-result" style="display:none;">
+            <button id="submit-selection-btn">선택 제출</button>
+            <div id="draw-result">
                 <h3>당첨자</h3>
                 <ul id="winners-list">
                     <!-- 당첨자 목록 -->
