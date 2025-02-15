@@ -41,13 +41,13 @@ signupBtn.addEventListener('click', () => {
 });
 
 signupLink.addEventListener('click', () => {
-    loginForm.style.display = 'none';
-    signupForm.style.display = 'block';
+    loginForm.classList.remove('active');
+    signupForm.classList.add('active');
 });
 
 loginLink.addEventListener('click', () => {
-    signupForm.style.display = 'none';
-    loginForm.style.display = 'block';
+    signupForm.classList.remove('active');
+    loginForm.classList.add('active');
 });
 
 drawBtn.addEventListener('click', () => {
@@ -103,13 +103,13 @@ function updateCountdown() {
 
 function updateUI() {
     if (loggedIn) {
-        lottoForm.style.display = 'block';
+        lottoForm.classList.add('active');
         participantsCount++;
         participantsCountElem.textContent = participantsCount;
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'none';
+        loginForm.classList.remove('active');
+        signupForm.classList.remove('active');
     } else {
-        lottoForm.style.display = 'none';
+        lottoForm.classList.remove('active');
     }
 }
 
