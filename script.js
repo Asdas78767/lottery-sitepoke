@@ -2,10 +2,12 @@ let participantsCount = 0;
 let loggedIn = false;
 let isAdmin = false;
 let winners = [];
+let selectedImages = [];
 
 const loginBtn = document.getElementById('login-btn');
 const signupBtn = document.getElementById('signup-btn');
 const drawBtn = document.getElementById('draw-btn');
+const submitSelectionBtn = document.getElementById('submit-selection-btn');
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
 const lottoForm = document.getElementById('lotto-form');
@@ -50,6 +52,38 @@ loginLink.addEventListener('click', () => {
     loginForm.classList.add('active');
 });
 
+const images = document.querySelectorAll('.pokemon-image');
+images.forEach(image => {
+    image.addEventListener('click', () => {
+        if (selectedImages.length < 4) {
+            image.classList.toggle('selected');
+            if (image.classList.contains('selected')) {
+                selectedImages.push(image.alt);
+            } else {
+                const index = selectedImages.indexOf(image.alt);
+                if (index > -1) {
+                    selectedImages.splice(index, 1);
+                }
+            }
+        } else if (image.classList.contains('selected')) {
+            image.classList.remove('selected');
+            const index = selectedImages.indexOf(image.alt);
+            if (index > -1) {
+                selectedImages.splice(index, 1);
+            }
+        }
+    });
+});
+
+submitSelectionBtn.addEventListener('click', () => {
+    if (selectedImages.length === 4) {
+        alert('선택이 제출되었습니다.');
+        // 여기에 선택된 이미지를 서버로 전송하는 로직을 추가하세요.
+    } else {
+        alert('4개의 이미지를 선택하세요.');
+    }
+});
+
 drawBtn.addEventListener('click', () => {
     if (!loggedIn) {
         alert('로그인이 필요합니다.');
@@ -63,7 +97,6 @@ drawBtn.addEventListener('click', () => {
     }
 
     winners = [];
-    const images = document.querySelectorAll('.pokemon-image');
     for (let i = 0; i < 4; i++) {
         const randomIndex = Math.floor(Math.random() * images.length);
         winners.push(images[randomIndex].alt);
@@ -108,6 +141,11 @@ function updateUI() {
         participantsCountElem.textContent = participantsCount;
         loginForm.classList.remove('active');
         signupForm.classList.remove('active');
+
+        if (isAdmin) {
+            drawBtn.style.display = 'block'; // Show draw button for admin
+            drawResult.style.display = 'block'; // Show draw result for admin
+        }
     } else {
         lottoForm.classList.remove('active');
     }
