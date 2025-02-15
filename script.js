@@ -91,6 +91,7 @@ submitSelectionBtn.addEventListener('click', () => {
         }).then(response => response.json())
           .then(data => {
               alert('선택이 제출되었습니다.');
+              saveSubmissionDate();
               console.log(data);
           }).catch(error => {
               console.error('Error:', error);
@@ -132,6 +133,17 @@ function displayWinners() {
         winnersList.appendChild(li);
     });
     drawResult.style.display = 'block';
+
+    // Display the selected images
+    const selectedImagesContainer = document.createElement('div');
+    selectedImagesContainer.classList.add('selected-images-container');
+    winners.forEach(image => {
+        const imgElement = document.createElement('img');
+        imgElement.src = `/lottery-sitepoke/images/${image}`;
+        imgElement.alt = image;
+        selectedImagesContainer.appendChild(imgElement);
+    });
+    drawResult.appendChild(selectedImagesContainer);
 }
 
 function updateCountdown() {
@@ -159,24 +171,28 @@ function updateUI() {
         signupForm.classList.remove('active');
 
         if (isAdmin) {
+            console.log('Admin logged in: showing draw button');
             drawBtn.style.display = 'block'; // Show draw button for admin
             drawResult.style.display = 'block'; // Show draw result for admin
+        } else {
+            console.log('Non-admin user logged in');
         }
     } else {
         lottoForm.classList.remove('active');
+        console.log('User not logged in');
     }
 }
 
-function hasSubmittedToday(minecraftId) {
+function hasSubmittedToday() {
     const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
     const today = new Date().toISOString().split('T')[0];
-    return submissions[minecraftId] === today;
+    return submissions[today] !== undefined;
 }
 
-function saveSubmissionDate(minecraftId) {
+function saveSubmissionDate() {
     const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
     const today = new Date().toISOString().split('T')[0];
-    submissions[minecraftId] = today;
+    submissions[today] = true;
     localStorage.setItem('submissions', JSON.stringify(submissions));
 }
 
