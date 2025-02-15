@@ -1,14 +1,14 @@
-const submitSelectionUrl = '/api/submit-selection';  // 이미지 제출 API
-const triggerDrawUrl = '/api/trigger-draw';  // 추첨 API
-const getDrawResultsUrl = '/api/get-draw-results';  // 당첨 결과 API
+// Define the server endpoint URLs
+const submitSelectionUrl = '/api/submit-selection';
+const triggerDrawUrl = '/api/trigger-draw';
+const getDrawResultsUrl = '/api/get-draw-results';
 
-let participantsCount = 0;  // 참가자 수
-let loggedIn = false;  // 로그인 여부
-let isAdmin = false;  // 관리자 여부
-let winners = [];  // 당첨자 목록
-let selectedImages = [];  // 선택된 이미지
+let participantsCount = 0;
+let loggedIn = false;
+let isAdmin = false;
+let winners = [];
+let selectedImages = [];
 
-// HTML 요소들
 const loginBtn = document.getElementById('login-btn');
 const signupBtn = document.getElementById('signup-btn');
 const drawBtn = document.getElementById('draw-btn');
@@ -23,25 +23,25 @@ const signupLink = document.getElementById('signup-link');
 const loginLink = document.getElementById('login-link');
 const drawResult = document.getElementById('draw-result');
 const completionMessage = document.getElementById('completion-message');
-const countdownDate = new Date().setHours(22, 0, 0, 0); // 매일 10시까지
+let countdownDate = new Date().setHours(22, 0, 0, 0); // 매일 10시까지
 
-// 로그인 버튼 이벤트
+// Handle login functionality
 loginBtn.addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    
+
     if (username === 'admin' && password === '4483') {
         isAdmin = true;
         loggedIn = true;
         alert('관리자로 로그인했습니다.');
-    } else {
+    } else if (username && password) {
         loggedIn = true;
     }
-    
+
     updateUI();
 });
 
-// 회원가입 버튼 이벤트
+// Handle signup functionality
 signupBtn.addEventListener('click', () => {
     const username = document.getElementById('new-username').value;
     const password = document.getElementById('new-password').value;
@@ -49,21 +49,22 @@ signupBtn.addEventListener('click', () => {
     updateUI();
 });
 
-// 회원가입/로그인 폼 전환
+// Handle form switching
 signupLink.addEventListener('click', () => {
     loginForm.classList.remove('active');
     signupForm.classList.add('active');
 });
+
 loginLink.addEventListener('click', () => {
     signupForm.classList.remove('active');
     loginForm.classList.add('active');
 });
 
-// 포켓몬 이미지 클릭 시 선택
+// Handle image selection
 const images = document.querySelectorAll('.pokemon-image');
 images.forEach(image => {
     image.addEventListener('click', () => {
-        if (selectedImages.length < 4) {
+        if (selectedImages.length < 4 || image.classList.contains('selected')) {
             image.classList.toggle('selected');
             if (image.classList.contains('selected')) {
                 selectedImages.push(image.alt);
@@ -73,17 +74,11 @@ images.forEach(image => {
                     selectedImages.splice(index, 1);
                 }
             }
-        } else if (image.classList.contains('selected')) {
-            image.classList.remove('selected');
-            const index = selectedImages.indexOf(image.alt);
-            if (index > -1) {
-                selectedImages.splice(index, 1);
-            }
         }
     });
 });
 
-// 선택 제출 버튼 이벤트
+// Submit selected images
 submitSelectionBtn.addEventListener('click', () => {
     if (selectedImages.length === 4) {
         fetch(submitSelectionUrl, {
@@ -109,7 +104,7 @@ submitSelectionBtn.addEventListener('click', () => {
     }
 });
 
-// 추첨 버튼 이벤트
+// Trigger draw for winners
 drawBtn.addEventListener('click', () => {
     if (!loggedIn) {
         alert('로그인이 필요합니다.');
@@ -133,7 +128,7 @@ drawBtn.addEventListener('click', () => {
       });
 });
 
-// 당첨자 표시
+// Display winners and selected images
 function displayWinners() {
     winnersList.innerHTML = '';
     winners.forEach(winner => {
@@ -143,7 +138,7 @@ function displayWinners() {
     });
     drawResult.style.display = 'block';
 
-    // 선택된 이미지 표시
+    // Display the selected images
     const selectedImagesContainer = document.createElement('div');
     selectedImagesContainer.classList.add('selected-images-container');
     winners.forEach(image => {
@@ -155,14 +150,14 @@ function displayWinners() {
     drawResult.appendChild(selectedImagesContainer);
 }
 
-// 카운트다운 업데이트
+// Update countdown timer
 function updateCountdown() {
     const now = new Date().getTime();
     const distance = countdownDate - now;
 
     if (distance < 0) {
         alert('새로운 추첨이 시작되었습니다!');
-        countdownDate.setDate(countdownDate.getDate() + 1); // 다음 날로 설정
+        countdownDate = new Date().setHours(22, 0, 0, 0); // Reset to the next day
     }
 
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -172,7 +167,7 @@ function updateCountdown() {
     countdownElem.textContent = `${hours}시간 ${minutes}분 ${seconds}초`;
 }
 
-// UI 업데이트
+// Update the UI based on login status
 function updateUI() {
     if (loggedIn) {
         lottoForm.classList.add('active');
@@ -182,24 +177,26 @@ function updateUI() {
         signupForm.classList.remove('active');
 
         if (isAdmin) {
-            drawBtn.style.display = 'block'; // 관리자일 때 추첨 버튼 표시
-            drawResult.style.display = 'block'; // 관리자일 때 결과 표시
+            console.log('Admin logged in: showing draw button');
+            drawBtn.style.display = 'block'; // Show draw button for admin
+            drawResult.style.display = 'block'; // Show draw result for admin
         } else {
             console.log('Non-admin user logged in');
         }
     } else {
         lottoForm.classList.remove('active');
+        console.log('User not logged in');
     }
 }
 
-// 오늘 제출 여부 확인
+// Check if the user has already submitted today
 function hasSubmittedToday() {
     const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
     const today = new Date().toISOString().split('T')[0];
     return submissions[today] !== undefined;
 }
 
-// 제출 날짜 저장
+// Save submission date to prevent multiple submissions per day
 function saveSubmissionDate() {
     const submissions = JSON.parse(localStorage.getItem('submissions')) || {};
     const today = new Date().toISOString().split('T')[0];
@@ -207,5 +204,4 @@ function saveSubmissionDate() {
     localStorage.setItem('submissions', JSON.stringify(submissions));
 }
 
-// 카운트다운 업데이트 1초마다 실행
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 1000); // Update countdown every second
