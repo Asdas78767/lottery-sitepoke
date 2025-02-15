@@ -88,15 +88,19 @@ submitSelectionBtn.addEventListener('click', () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ images: selectedImages })
-        }).then(response => response.json())
-          .then(data => {
-              alert('선택이 제출되었습니다.');
-              saveSubmissionDate();
-              console.log(data);
-          }).catch(error => {
-              console.error('Error:', error);
-              alert('제출 실패. 다시 시도해 주세요.');
-          });
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }).then(data => {
+            alert('선택이 제출되었습니다.');
+            saveSubmissionDate();
+            console.log(data);
+        }).catch(error => {
+            console.error('Submission Error:', error);
+            alert('제출 실패. 다시 시도해 주세요.');
+        });
     } else {
         alert('4개의 이미지를 선택하세요.');
     }
@@ -120,7 +124,7 @@ drawBtn.addEventListener('click', () => {
           completionMessage.style.display = 'block';
           drawBtn.style.display = 'none';
       }).catch(error => {
-          console.error('Error:', error);
+          console.error('Draw Error:', error);
           alert('추첨 실패. 다시 시도해 주세요.');
       });
 });
