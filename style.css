@@ -83,3 +83,18 @@ button:hover {
     margin: 5px 0;
     border-radius: 5px;
 }
+
+#login-form, #signup-form, #lotto-form {
+    display: none;
+}
+
+#login-form.active, #signup-form.active, #lotto-form.active {
+    display: block;
+}
+
+#completion-message {
+    display: none;
+    color: green;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
