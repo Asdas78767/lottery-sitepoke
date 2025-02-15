@@ -90,7 +90,7 @@ submitSelectionBtn.addEventListener('click', () => {
             body: JSON.stringify({ images: selectedImages })
         }).then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json().then(err => { throw new Error(`HTTP error! Status: ${response.status}, Message: ${err.message}`); });
             }
             return response.json();
         }).then(data => {
@@ -99,7 +99,7 @@ submitSelectionBtn.addEventListener('click', () => {
             console.log(data);
         }).catch(error => {
             console.error('Submission Error:', error);
-            alert('제출 실패. 다시 시도해 주세요.');
+            alert(`제출 실패. 다시 시도해 주세요. 오류 메시지: ${error.message}`);
         });
     } else {
         alert('4개의 이미지를 선택하세요.');
