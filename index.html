@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="포켓몬 이미지 추첨을 통해 재미있는 경험을 제공합니다.">
     <title>포켓몬 이미지 추첨</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <main class="container">
         <h1>포켓몬 이미지 추첨</h1>
-        <button id="draw-button" class="draw-button">3개의 포켓몬 추첨</button>
+        <button id="draw-button" class="draw-button" aria-label="3개의 포켓몬 추첨">3개의 포켓몬 추첨</button>
         
-        <div id="pokemon-container">
+        <section id="pokemon-container" aria-live="polite">
             <div class="pokemon-image" id="pokemon-1">
                 <img src="" alt="포켓몬 이미지 1" style="display:none;">
                 <p id="pokemon-name-1" class="pokemon-name" style="display:none;"></p>
@@ -25,14 +26,14 @@
                 <img src="" alt="포켓몬 이미지 3" style="display:none;">
                 <p id="pokemon-name-3" class="pokemon-name" style="display:none;"></p>
             </div>
-        </div>
+        </section>
 
         <h2>이전 추첨 결과</h2>
         <div id="history-container"></div>
-    </div>
+    </main>
 
-    <audio id="draw-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio> <!-- 효과음 추가 -->
+    <audio id="draw-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
