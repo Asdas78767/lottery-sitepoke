@@ -4,17 +4,20 @@ body {
     color: #444;
     text-align: center;
     margin-top: 50px;
+    padding: 0 10px;
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
+    max-width: 1200px;
 }
 
 h1 {
     font-size: 40px;
     color: #ffcb05;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
 }
 
 button {
@@ -26,18 +29,20 @@ button {
     cursor: pointer;
     border-radius: 10px;
     font-family: 'Press Start 2P', cursive;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     margin-top: 20px;
 }
 
 button:hover {
     background-color: #ff4500;
+    transform: scale(1.05);
 }
 
 #pokemon-container {
     margin-top: 20px;
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
 }
 
@@ -94,4 +99,21 @@ img {
     padding: 10px;
     border-radius: 5px;
     font-family: 'Press Start 2P', cursive;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 30px;
+    }
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+    }
+    .pokemon-name {
+        font-size: 18px;
+    }
+    #history-container {
+        font-size: 16px;
+    }
 }
