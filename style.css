@@ -50,8 +50,8 @@ button:hover {
 
 .pokemon-image {
     flex: 0 0 auto; /* Prevent images from shrinking */
-    width: 200px; /* Set a uniform width */
-    height: 200px; /* Set a uniform height */
+    width: 100px; /* Set a uniform width (half of the current size) */
+    height: 100px; /* Set a uniform height (half of the current size) */
     position: relative;
     background-color: #fff;
     border-radius: 15px;
