@@ -41,14 +41,17 @@ button:hover {
 #pokemon-container {
     margin-top: 20px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
+    flex-wrap: nowrap; /* Ensure images are displayed horizontally */
+    justify-content: flex-start; /* Align items to the start */
+    overflow-x: auto; /* Allow horizontal scrolling if necessary */
+    gap: 10px; /* Adjust gap between images */
+    padding: 20px;
 }
 
 .pokemon-image {
-    max-width: 300px;
-    max-height: 350px;
+    flex: 0 0 auto; /* Prevent images from shrinking */
+    width: 200px; /* Set a uniform width */
+    height: 200px; /* Set a uniform height */
     position: relative;
     background-color: #fff;
     border-radius: 15px;
@@ -71,7 +74,7 @@ button:hover {
 
 img {
     width: 100%;
-    height: auto;
+    height: 100%; /* Ensure images fit within the container */
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     transition: opacity 1s ease-in-out;
