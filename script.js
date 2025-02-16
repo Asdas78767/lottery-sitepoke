@@ -35,6 +35,7 @@ const pokemonImagesContainer = [
     { container: document.getElementById('pokemon-3'), name: document.getElementById('pokemon-name-3') }
 ];
 const historyContainer = document.getElementById('history-container');
+const drawSound = document.getElementById('draw-sound');
 
 function updateHistory(selectedIndexes) {
     const historyItem = document.createElement('div');
@@ -63,13 +64,18 @@ drawButton.addEventListener('click', function() {
     // 히스토리 갱신
     updateHistory(selectedIndexes);
 
-    // 각 이미지 컨테이너에 새로운 이미지와 이름 설정
+    // 효과음 재생
+    drawSound.play();
+
+    // 각 이미지 컨테이너에 새로운 이미지와 이름 순차적으로 설정
     selectedIndexes.forEach((index, i) => {
-        const img = pokemonImagesContainer[i].container.querySelector('img');
-        const name = pokemonImages[index].name;
-        img.src = pokemonImages[index].imageUrl;
-        pokemonImagesContainer[i].name.textContent = name;
-        img.style.display = 'block';
-        pokemonImagesContainer[i].name.style.display = 'block';
+        setTimeout(() => {
+            const img = pokemonImagesContainer[i].container.querySelector('img');
+            const name = pokemonImages[index].name;
+            img.src = pokemonImages[index].imageUrl;
+            pokemonImagesContainer[i].name.textContent = name;
+            img.style.display = 'block';
+            pokemonImagesContainer[i].name.style.display = 'block';
+        }, i * 1000); // 1초 간격으로 순차적으로 이미지 나오게 설정
     });
 });
