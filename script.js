@@ -1,31 +1,31 @@
 const pokemonImages = [
-    { name: 'Bulbasaur', imageUrl: 'images/1-1.png' },
-    { name: 'Ivysaur', imageUrl: 'images/2-2.png' },
-    { name: 'Venusaur', imageUrl: 'images/3.png' },
-    { name: 'Charmander', imageUrl: 'images/4-1.png' },
-    { name: 'Charmeleon', imageUrl: 'images/5.png' },
-    { name: 'Charizard', imageUrl: 'images/6.png' },
-    { name: 'Squirtle', imageUrl: 'images/7.png' },
-    { name: 'Wartortle', imageUrl: 'images/8.png' },
-    { name: 'Blastoise', imageUrl: 'images/9.png' },
-    { name: 'Caterpie', imageUrl: 'images/10.png' },
-    { name: 'Metapod', imageUrl: 'images/11.png' },
-    { name: 'Butterfree', imageUrl: 'images/12.png' },
-    { name: 'Weedle', imageUrl: 'images/13.png' },
-    { name: 'Kakuna', imageUrl: 'images/14.png' },
-    { name: 'Beedrill', imageUrl: 'images/15.png' },
-    { name: 'Pidgey', imageUrl: 'images/16.png' },
-    { name: 'Pidgeotto', imageUrl: 'images/17.png' },
-    { name: 'Pidgeot', imageUrl: 'images/18.png' },
-    { name: 'Rattata', imageUrl: 'images/19.png' },
-    { name: 'Raticate', imageUrl: 'images/20.png' },
-    { name: 'Zubat', imageUrl: 'images/21.png' },
-    { name: 'Golbat', imageUrl: 'images/22.png' },
-    { name: 'Oddish', imageUrl: 'images/23.png' },
-    { name: 'Gloom', imageUrl: 'images/24.png' },
-    { name: 'Vileplume', imageUrl: 'images/25.png' },
-    { name: 'Paras', imageUrl: 'images/26.png' },
-    { name: 'Parasect', imageUrl: 'images/27.png' }
+    { name: '이상해씨', imageUrl: 'images/1-1.png' },
+    { name: '파이리', imageUrl: 'images/4-1.png' },
+    { name: '꼬부기', imageUrl: 'images/7.png' },
+    { name: '치코리타', imageUrl: 'images/2-2.png' },
+    { name: '브케인', imageUrl: 'images/5.png' },
+    { name: '리아코', imageUrl: 'images/9.png' },
+    { name: '나무지기', imageUrl: 'images/3.png' },
+    { name: '아차모', imageUrl: 'images/6.png' },
+    { name: '물짱이', imageUrl: 'images/8.png' },
+    { name: '모부기', imageUrl: 'images/10.png' },
+    { name: '불꽃숭이', imageUrl: 'images/11.png' },
+    { name: '팽도리', imageUrl: 'images/12.png' },
+    { name: '주리비얀', imageUrl: 'images/13.png' },
+    { name: '뚜꾸리', imageUrl: 'images/14.png' },
+    { name: '수댕이', imageUrl: 'images/15.png' },
+    { name: '도치마론', imageUrl: 'images/16.png' },
+    { name: '푸호꼬', imageUrl: 'images/17.png' },
+    { name: '개구마르', imageUrl: 'images/18.png' },
+    { name: '나몰빼미', imageUrl: 'images/19.png' },
+    { name: '냐오불', imageUrl: 'images/20.png' },
+    { name: '누리공', imageUrl: 'images/21.png' },
+    { name: '흥나숭', imageUrl: 'images/22.png' },
+    { name: '염버니', imageUrl: 'images/23.png' },
+    { name: '울머기', imageUrl: 'images/24.png' },
+    { name: '나오하', imageUrl: 'images/25.png' },
+    { name: '뜨아거', imageUrl: 'images/26.png' },
+    { name: '꾸왁스', imageUrl: 'images/27.png' }
 ];
 
 const drawButton = document.getElementById('draw-button');
@@ -44,7 +44,7 @@ function updateHistory(selectedIndexes) {
     historyContainer.appendChild(historyItem);
 }
 
-drawButton.addEventListener('click', function() {
+function drawPokemon() {
     // 기존에 보이던 이미지를 숨김
     pokemonImagesContainer.forEach(container => {
         const img = container.container.querySelector('img');
@@ -78,4 +78,6 @@ drawButton.addEventListener('click', function() {
             pokemonImagesContainer[i].name.style.display = 'block';
         }, i * 1000); // 1초 간격으로 순차적으로 이미지 나오게 설정
     });
-});
+}
+
+drawButton.addEventListener('click', drawPokemon);
